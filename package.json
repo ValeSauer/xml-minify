@@ -1,0 +1,16 @@
+{
+  "name": "xml-to-json",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "test"
+  },
+  "author": "Valentin Sauer",
+  "license": "MIT",
+  "dependencies": {
+    "xml-stream": "~0.4.5"
+  },
+  "devDependencies": {}
+}

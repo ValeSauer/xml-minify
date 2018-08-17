@@ -1,0 +1,50 @@
+<PGR>
+    <PRO id="123">
+        <PRAT name="name">
+            <VALUE>Produkt A</VALUE>
+        </PRAT>
+        <PRAT name="description">
+            <VALUE>Das ist Produkt A</VALUE>
+        </PRAT>
+        <PRV id="123-1">
+            <PRAT name="hoehe">
+                <VALUE>100 cm</VALUE>
+            </PRAT>
+            <PRAT name="breite">
+                <VALUE>50 cm</VALUE>
+            </PRAT>
+        </PRV>
+        <PRV id="123-2">
+            <PRAT name="hoehe">
+                <VALUE>150 cm</VALUE>
+            </PRAT>
+            <PRAT name="breite">
+                <VALUE>75 cm</VALUE>
+            </PRAT>
+        </PRV>
+    </PRO>
+    <PRO id="456">
+        <PRAT name="name">
+            <VALUE>Produkt B</VALUE>
+        </PRAT>
+        <PRAT name="description">
+            <VALUE>Das ist Produkt B</VALUE>
+        </PRAT>
+        <PRV id="456-1">
+            <PRAT name="hoehe">
+                <VALUE>111 cm</VALUE>
+            </PRAT>
+            <PRAT name="breite">
+                <VALUE>55 cm</VALUE>
+            </PRAT>
+        </PRV>
+        <PRV id="456-2">
+            <PRAT name="hoehe">
+                <VALUE>151 cm</VALUE>
+            </PRAT>
+            <PRAT name="breite">
+                <VALUE>76 cm</VALUE>
+            </PRAT>
+        </PRV>
+    </PRO>
+</PGR>
