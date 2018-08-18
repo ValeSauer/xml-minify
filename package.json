@@ -10,7 +10,8 @@
   "author": "Valentin Sauer",
   "license": "MIT",
   "dependencies": {
-    "xml-stream": "~0.4.5"
+    "xml-stream": "~0.4.5",
+    "xml": "~1.0.1"
   },
   "devDependencies": {}
 }
