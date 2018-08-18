@@ -50,5 +50,5 @@ const whitelists = [{
     flatten: true
   }];
 
-const minifier = new xmlMinify('test.xml', 'out.xml', whitelists)
+xmlMinify('./test/test.xml', whitelists);
 

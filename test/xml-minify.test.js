@@ -1,6 +1,10 @@
 import test from 'ava';
-import xml from '../lib/xml-minify';
+import xmlMinify from '../lib/xml-minify';
 
-function xmlMinify(inputPath, outputPath, whitelists, iterator){
+test('Missing arguments', t => {
+    const error = t.throws(() => {
+		xmlMinify('./test/test.xml');
+	}, TypeError);
 
-}
+    t.is(error.message, 'Function arguments inputPath and whitelists must be given');
+});
