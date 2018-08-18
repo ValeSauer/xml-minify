@@ -11,7 +11,8 @@
   "license": "MIT",
   "dependencies": {
     "xml-stream": "~0.4.5",
-    "xml": "~1.0.1"
+    "xml": "~1.0.1",
+    "lodash": "~4.17.10"
   },
   "devDependencies": {}
 }
