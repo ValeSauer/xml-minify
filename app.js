@@ -68,7 +68,7 @@ createProduct = function(readProduct){
   writeProduct[0].PRO.push(newChild);
  })
 
-  console.log(xml(writeProduct, true));
+  //console.log(xml(writeProduct, true));
   
   writeStream.write(xml(writeProduct, true));
   writeStream.write('\n');
