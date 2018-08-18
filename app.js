@@ -9,7 +9,7 @@ var xml = require('xml');
 
 xmlIn.preserve('PGR PRO', false);
 
-configs = [{
+whitelists = [{
   level: 1,
   filterNode: 'PRAT',
   attributeFilters: [{name: 'name'}],
@@ -27,6 +27,12 @@ configs = [{
   attributeFilters: null,
   keepAttributes: ['id'],
   flatten: false
+},{
+  level: 2,
+  filterNode: 'VALUE',
+  attributeFilters: null,
+  keepAttributes: [],
+  flatten: true
 },{
   level: 2,
   filterNode: 'PRAT',
@@ -73,11 +79,13 @@ getChildren = function(readChildren, level = 0){
   level++;
   var writeChildren = [];
   readChildren.forEach(readChild => {
-    var localConfig = _.find(configs, config => {        
-      if(config.level == level && config.filterNode == readChild.$name){
-        if(config.attributeFilters && _.isArray(config.attributeFilters)){
-          for (i = 0; i < config.attributeFilters.length; i++) { 
-            if(!_.find([readChild.$], config.attributeFilters[i])){
+
+    // Check node against whitelist, abort if no match is found
+    var currentWhitelist = _.find(whitelists, whitelist => {        
+      if(whitelist.level == level && whitelist.filterNode == readChild.$name){
+        if(whitelist.attributeFilters && _.isArray(whitelist.attributeFilters)){
+          for (i = 0; i < whitelist.attributeFilters.length; i++) { 
+            if(!_.find([readChild.$], whitelist.attributeFilters[i])){
               return false;
             }
           }
@@ -86,36 +94,32 @@ getChildren = function(readChildren, level = 0){
       }
     })
 
-    if(localConfig){
+    if(currentWhitelist){
 
-      // Filter for attributes
-      if(localConfig.attributeFilters && _.isArray(localConfig.attributeFilters)){
-        localConfig.attributeFilters.forEach(attributeFilter => {
-          if(!_.find([readChild.$], attributeFilter))
-            return false;
+      if(currentWhitelist.flatten){
+        // Flatten the node
+        writeChildren.push(readChild.$children[0] );
+      }else{
+        // Take over attributes from input to output node
+        var attributes = {}
+        currentWhitelist.keepAttributes.forEach(keepAttribute => {
+          attributes[keepAttribute] = readChild.$[keepAttribute];
         })
-      }
 
-
-      // Take over attributes from input to output node
-      var attributes = {}
-      localConfig.keepAttributes.forEach(keepAttribute => {
-        attributes[keepAttribute] = readChild.$[keepAttribute];
-      })
-
-      if(_.isArray(readChild.$children)){
-        var writeChild = {};
-        writeChild[readChild.$name] = [];
-        writeChild[readChild.$name].push({_attr: attributes});
-        if(_.isString(readChild.$children[0])){
-          writeChild[readChild.$name].push(readChild.$children[0]);
-        }else if (_.isObject(readChild.$children[0])){
-          newChildren = getChildren(readChild.$children, level);
-          newChildren.forEach(newChild => {
-            writeChild[readChild.$name].push( newChild );
-          })
+        if(_.isArray(readChild.$children)){
+          var writeChild = {};
+          writeChild[readChild.$name] = [];
+          writeChild[readChild.$name].push({_attr: attributes});
+          if(_.isString(readChild.$children[0])){
+            writeChild[readChild.$name].push(readChild.$children[0]);
+          }else if (_.isObject(readChild.$children[0])){
+            newChildren = getChildren(readChild.$children, level);
+            newChildren.forEach(newChild => {
+              writeChild[readChild.$name].push( newChild );
+            })
+          }
+          writeChildren.push(writeChild);
         }
-        writeChildren.push(writeChild);
       }
     }
   })
