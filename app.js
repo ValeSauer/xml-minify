@@ -12,7 +12,13 @@ xmlIn.preserve('PGR PRO', false);
 configs = [{
   level: 1,
   filterNode: 'PRAT',
-  attributeFilters: [{name: 'hoehe'}, {name: 'breite'}],
+  attributeFilters: [{name: 'name'}],
+  keepAttributes: ['name'],
+  flatten: false
+},{
+  level: 1,
+  filterNode: 'PRAT',
+  attributeFilters: [{name: 'description'}],
   keepAttributes: ['name'],
   flatten: false
 },{
@@ -24,7 +30,13 @@ configs = [{
 },{
   level: 2,
   filterNode: 'PRAT',
-  attributeFilters: [{name: 'hoehe'}, {name: 'breite'}],
+  attributeFilters: [{name: 'hoehe'}],
+  keepAttributes: ['name'],
+  flatten: false
+},{
+  level: 2,
+  filterNode: 'PRAT',
+  attributeFilters: [{name: 'breite'}],
   keepAttributes: ['name'],
   flatten: false
 },{
@@ -59,34 +71,52 @@ createProduct = function(readProduct){
 
 getChildren = function(readChildren, level = 0){
   level++;
-  writeChildren = [];
+  var writeChildren = [];
   readChildren.forEach(readChild => {
     var localConfig = _.find(configs, config => {        
       if(config.level == level && config.filterNode == readChild.$name){
+        if(config.attributeFilters && _.isArray(config.attributeFilters)){
+          for (i = 0; i < config.attributeFilters.length; i++) { 
+            if(!_.find([readChild.$], config.attributeFilters[i])){
+              return false;
+            }
+          }
+        }
         return true;
       }
     })
+
     if(localConfig){
+
+      // Filter for attributes
+      if(localConfig.attributeFilters && _.isArray(localConfig.attributeFilters)){
+        localConfig.attributeFilters.forEach(attributeFilter => {
+          if(!_.find([readChild.$], attributeFilter))
+            return false;
+        })
+      }
+
+
+      // Take over attributes from input to output node
       var attributes = {}
       localConfig.keepAttributes.forEach(keepAttribute => {
         attributes[keepAttribute] = readChild.$[keepAttribute];
       })
-      var writeChild = {};
-      writeChild[readChild.$name] = [];
-      writeChild[readChild.$name].push({_attr: attributes});
+
       if(_.isArray(readChild.$children)){
+        var writeChild = {};
+        writeChild[readChild.$name] = [];
+        writeChild[readChild.$name].push({_attr: attributes});
         if(_.isString(readChild.$children[0])){
-          console.log("Appending Value " + readChild.$children[0] + " to node " + readChild.$name)
           writeChild[readChild.$name].push(readChild.$children[0]);
-        }else if (_.isObject(readChild.$children[0]) && 1 == 2){
-          console.log("Appending Node")
+        }else if (_.isObject(readChild.$children[0])){
           newChildren = getChildren(readChild.$children, level);
           newChildren.forEach(newChild => {
-            writeChild[readChild.$name].push([{newChild}]);
+            writeChild[readChild.$name].push( newChild );
           })
         }
+        writeChildren.push(writeChild);
       }
-      writeChildren.push(writeChild);
     }
   })
   return writeChildren;
@@ -106,8 +136,6 @@ xmlIn.on('updateElement: PRO', function(readProduct) {
 writeStream.on('finish', () => {  
   console.log('wrote all data to file');
 });
-
-// close the stream
 
 
 xmlIn.on('end', function(){
