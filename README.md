@@ -49,6 +49,7 @@ Aboves config will transform
         </variant>
         <brand>Awesome Clothing Company</brand>
     </product>
+</products>
 ```
 into this structure:
 ```xml
