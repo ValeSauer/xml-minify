@@ -60,6 +60,8 @@ typings/
 # next.js build output
 .next
 
+# files for testing purposes
+config.xml
 out.xml
 test_big.xml
 xml_test_small.xml
