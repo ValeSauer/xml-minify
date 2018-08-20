@@ -8,8 +8,7 @@
   },
   "scripts": {
     "start": "node ./app.js",
-    "test": "ava",
-    "prepublish": "test"
+    "test": "ava"
   },
   "author": "Valentin Sauer <ValeSauer@gmx.de>",
   "license": "MIT",
