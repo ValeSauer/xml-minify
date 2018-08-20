@@ -7,23 +7,62 @@ A simple tool that reads XML structures from a source file, filters nodes and at
 
 ## Usage
 
-You can either use xml-minify as a node module or as as CLI. Both ways require a config file.
+You can either use xml-minify as a node module or as as CLI. Both ways require a config file. You can specify whitelist-entries for every level, node and attribute. Every element that does not match a whitelist entry, will be removed. Duplicate entries for the same level, node and attributes are not allowed. The first element (level 0) defines the stream-chunks.
 
 ```javascript
 [{
     level: 0,
-    filterNode: 'PRO',
-    attributeFilters: null,
+    rootPath: 'products'
+    filterNode: 'product',
     keepAttributes: ['id'],
-    flatten: false
   },{
     level: 1,
-    filterNode: 'PRAT',
-    attributeFilters: [{name: 'name'}],
+    filterNode: 'variant',
+    attributeFilters: [{color: 'blue'}],
     keepAttributes: ['name'],
-    flatten: false
+  },{
+    level: 2,
+    filterNode: 'price',
+    flatten: true
   }
 ``` 
+
+Aboves config will transform 
+
+```xml
+<products>
+    <product id="111" category="jackets">
+        <variant color="blue" name="Blue Jacket">
+            <price>100.00</price>
+        </variant>
+        <variant color="red" name="Red Jacket">
+            <price>150.00</price>
+        </variant>
+        <brand>Awesome Clothing Company</brand>
+    </product>
+    <product id="222" category="jeans">
+        <variant color="blue" name="Blue Jeans">
+            <price>50.00</price>
+        </variant>
+        <variant color="red" name="Red Jeans">
+            <price>75.00</price>
+        </variant>
+        <brand>Awesome Clothing Company</brand>
+    </product>
+```
+into this structure:
+```xml
+<products>
+    <product id="111">
+        <variant name="Blue Jacket">100.00</variant>
+    </product>
+    <product id="222">
+        <variant name="Blue Jeans">50.00</variant>
+    </product>
+</products>
+```
+
+
 
 ### Use xml-minify as CLI
 
