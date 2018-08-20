@@ -7,14 +7,13 @@ A simple tool that reads XML structures from a source file, filters nodes and at
 
 ## Usage
 
-You can either use xml-minify as a node module or as as CLI. Both ways require a config file. You can specify whitelist-entries for every level, node and attribute. Every element that does not match a whitelist entry, will be removed. Duplicate entries for the same level, node and attributes are not allowed. The first element (level 0) defines the stream-chunks.
+You can either use xml-minify as a node module or as as CLI. Both ways require a config file. You can specify whitelist-entries for every level, node and attribute. Every element that does not match a whitelist entry, will be removed. Duplicate entries for the same level, node and attributes are not allowed. The first element (level 0) defines the stream-chunks. Only the level-0 entry is allowed to have a path as a filterNode.
 
 ```javascript
 [{
     level: 0,
-    rootPath: 'products'
-    filterNode: 'product',
-    keepAttributes: ['id'],
+    filterNode: 'root products product',
+    keepAttributes: ['id']
   },{
     level: 1,
     filterNode: 'variant',
@@ -24,32 +23,34 @@ You can either use xml-minify as a node module or as as CLI. Both ways require a
     level: 2,
     filterNode: 'price',
     flatten: true
-  }
+    }]
 ``` 
 
 Aboves config will transform 
 
 ```xml
-<products>
-    <product id="111" category="jackets">
-        <variant color="blue" name="Blue Jacket">
-            <price>100.00</price>
-        </variant>
-        <variant color="red" name="Red Jacket">
-            <price>150.00</price>
-        </variant>
-        <brand>Awesome Clothing Company</brand>
-    </product>
-    <product id="222" category="jeans">
-        <variant color="blue" name="Blue Jeans">
-            <price>50.00</price>
-        </variant>
-        <variant color="red" name="Red Jeans">
-            <price>75.00</price>
-        </variant>
-        <brand>Awesome Clothing Company</brand>
-    </product>
-</products>
+<root>
+    <products>
+        <product id="111" category="jackets">
+            <variant color="blue" name="Blue Jacket">
+                <price>100.00</price>
+            </variant>
+            <variant color="red" name="Red Jacket">
+                <price>150.00</price>
+            </variant>
+            <brand>Awesome Clothing Company</brand>
+        </product>
+        <product id="222" category="jeans">
+            <variant color="blue" name="Blue Jeans">
+                <price>50.00</price>
+            </variant>
+            <variant color="red" name="Red Jeans">
+                <price>75.00</price>
+            </variant>
+            <brand>Awesome Clothing Company</brand>
+        </product>
+    </products>
+</root>
 ```
 into this structure:
 ```xml
