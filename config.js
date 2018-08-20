@@ -1,4 +1,4 @@
-const whitelists = [{
+[{
     level: 0,
     filterNode: 'PRO',
     attributeFilters: null,
@@ -46,4 +46,4 @@ const whitelists = [{
     attributeFilters: null,
     keepAttributes: [],
     flatten: true
-  }];
+  }]
