@@ -62,3 +62,5 @@ typings/
 
 out.xml
 test_big.xml
+xml_test_small.xml
+xml_test_big.xml

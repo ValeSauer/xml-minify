@@ -50,5 +50,5 @@ const whitelists = [{
     flatten: true
   }];
 
-xmlMinify('./test/test.xml', whitelists);
+xmlMinify('./xml_test_big.xml', whitelists);
 

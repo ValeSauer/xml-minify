@@ -12,7 +12,8 @@
   "dependencies": {
     "xml-stream": "~0.4.5",
     "xml": "~1.0.1",
-    "lodash": "~4.17.10"
+    "lodash": "~4.17.10",
+    "stream-counter": "1.0.0"
   },
   "devDependencies": {
     "ava": "~0.25.0"
