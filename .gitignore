@@ -61,6 +61,7 @@ typings/
 .next
 
 # files for testing purposes
+config.json
 config.xml
 out.xml
 test_big.xml
