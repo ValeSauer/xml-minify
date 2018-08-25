@@ -12,7 +12,7 @@ test('it should throw on missing arguments', t => {
     t.is(error.message, 'Function arguments readStream and whitelists must be given');
 });
 
-test('it should throw on missing arguments', t => {
+test('It should correctly minify a complex object', t => {
   const result = xmlMinify.minify(product, config);
   
   const expected = { product:
