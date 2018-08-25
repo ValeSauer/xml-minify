@@ -1,3 +1,4 @@
+const fs = require('fs')
 const xmlMinify = require('./lib/xml-minify');
 
 const config  = [{
@@ -10,10 +11,25 @@ const config  = [{
   attributeFilters: [{color: 'blue'}],
   keepAttributes: ['name'],
 },{
+  level: 1,
+  filterNode: 'bullets',
+  keepAttributes: ['name']
+},{
+  level: 2,
+  filterNode: 'bullet',
+  flatten: true
+},{
+  level: 3,
+  filterNode: 'text',
+  flatten: true
+},{
   level: 2,
   filterNode: 'price',
   flatten: true
-  }];
+}];
 
-xmlMinify('./test/test.xml', config);
+//const writeStream = fs.createWriteStream(outputPath);
+const readStream = fs.createReadStream('./test/test.xml');
+
+xmlMinify(readStream, config);
 
