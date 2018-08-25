@@ -39,6 +39,14 @@ Aboves config will transform
                 <price>150.00</price>
             </variant>
             <brand>Awesome Clothing Company</brand>
+            <bullets name="pros">
+                <bullet>
+                    <text>Nice color</text>
+                </bullet>
+                <bullet>
+                    <text>Even nicer fit</text>
+                </bullet>
+            </bullets>
         </product>
         <product id="222" category="jeans">
             <variant color="blue" name="Blue Jeans">
@@ -57,6 +65,7 @@ into this structure:
 <products>
     <product id="111">
         <variant name="Blue Jacket">100.00</variant>
+        <bullets name="pros">Nice color;Even nicer fit</bullets>
     </product>
     <product id="222">
         <variant name="Blue Jeans">50.00</variant>

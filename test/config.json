@@ -10,7 +10,8 @@
   },{
     "level": 1,
     "filterNode": "bullets",
-    "keepAttributes": ["name"]
+    "keepAttributes": ["name"],
+    "separator": ";"
   },{
     "level": 2,
     "filterNode": "bullet",

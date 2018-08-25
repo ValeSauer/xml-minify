@@ -30,26 +30,10 @@ const config  = [{
   flatten: true
 }];
 
-test('Missing arguments', t => {
+test('it should throw on missing arguments', t => {
     const error = t.throws(() => {
 		xmlMinify('test');
 	}, TypeError);
 
     t.is(error.message, 'Function arguments readStream and whitelists must be given');
-});
-
-test('Correct result of complex XML', t => {
-
-  const readStream = fs.createReadStream('./test/test.xml');
-  const writeStream = process.stdout;
-
-  writeStream.on('write', function() {
- 
-    console.log("Done");
-    console.log(writer.toString());
-  });
-
-  xmlMinify(readStream, config, writeStream);
-  
-
 });
